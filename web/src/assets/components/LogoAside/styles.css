@@ -1,0 +1,27 @@
+.logoAside-component {
+    height: 40%;
+    background-color: var(--color-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.logoAside-component img {
+    height: 32rem;
+    overflow: hidden;   
+}
+
+@media (min-width: 700px){
+    .logoAside-component {
+        width: 50%;
+        height: 100vh;
+        background-color: var(--color-primary);
+        align-items: center;
+       
+    }
+
+    .logoAside-component img {
+        height: 60rem;
+    }
+}

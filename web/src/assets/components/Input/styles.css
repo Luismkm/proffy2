@@ -1,0 +1,8 @@
+.input-component{
+    width: 100%;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+    border: 0.1rem solid var(--color-line-in-white);
+    padding: 0 1.6rem;
+    background: var(--color-input-background);
+}

@@ -1,0 +1,155 @@
+#page-login {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* #logo-content {
+    height: 40%;
+    background-color: var(--color-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#logo-content img {
+    height: 32rem;
+    overflow: hidden;   
+} */
+
+#page-login .form-content {
+    height: 60%;
+    width: 100%;
+    background-color: var(--color-background);
+}
+
+#page-login .form-content main {
+    background-color: var(--color-background);
+    max-width: 35rem;
+    margin: -3.2rem auto;
+    border-radius: 0.8rem;
+
+}
+
+#page-login .form-content main fieldset {
+    border: 0;
+    padding: 0 2.4rem;
+}
+
+#page-login .form-content main fieldset span {
+    font: 400 1.2rem Poppins;
+    color: var(--color-text-complement);
+    height: 15px;
+}
+
+#page-login .form-content main fieldset legend {
+    font: 600 2.6rem Poppins;
+    color: var(--color-text-title);
+    padding: 2rem 0;
+}
+
+#page-login .form-content main fieldset .remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0.5rem;
+}
+
+#page-login .form-content main fieldset .remember input + span {
+    margin-left: -6.5rem;
+}
+
+#page-login .form-content main fieldset button {
+    width: 100%;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+    border: 0;
+    margin-top: 1rem;
+    background: var(--color-button-background);
+    font: 600 1.6rem Archivo;
+    color: var(--color-text-complement);
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#page-login .form-content main fieldset button:hover {
+    background: var(--color-secondary);
+    color: var(--color-button-text);
+}
+
+/* #page-login .form-content .inputblock input {
+    width: 100%;
+    height: 5.6rem;
+    border-radius: 0.8rem;
+    border: 0.1rem solid var(--color-line-in-white);
+    padding: 0 1.6rem;
+    background: var(--color-input-background);
+} */
+
+#page-login .form-content main fieldset span + span:hover {
+    border-bottom: solid 0.1rem var(--color-text-complement);
+    cursor: pointer;
+}
+
+#page-login .form-content footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 5rem 3rem 0 3rem;
+}
+
+#page-login .form-content footer:nth-child(2) {
+    font: 400 1.2rem Poppins;
+    color: (--color-text-complement);
+}
+
+#page-login .form-content footer > p {
+    font: 400 1.5rem Poppins;
+    color: var(--color-text-base);
+    line-height: 2.2rem;
+}
+
+#page-login .form-content footer p > span {
+    font: 600 1.5rem Poppins;
+    color: var(--color-primary);
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+#page-login .form-content footer p > span:hover {
+    opacity: 0.8;
+}
+
+
+
+@media (min-width: 700px){
+    #page-login {
+        display: flex;
+        flex-direction: row;
+        width: 100vw;
+        height: 100vh;
+    }
+    
+    /* #logo-content {
+        width: 50%;
+        height: 100vh;
+        background-color: var(--color-primary);
+        align-items: center;
+    }
+
+    #logo-content img {
+        height: 60rem;
+    } */
+    
+    #page-login .form-content {
+        width: 50%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }
+
+}
