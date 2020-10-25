@@ -1,0 +1,121 @@
+#page-create-success {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-primary);
+  position: relative;
+}
+
+#page-create-success .page-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+#page-create-success .page-content img {
+  height: 52rem;
+  overflow: hidden;
+  z-index: 5;
+}
+
+#page-create-success .page-content .titles {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#page-create-success .page-content button {
+  border-radius: 0.8rem;
+  border: 0;
+  background-color: var(--color-secondary);
+  color: var(--color-button-text);
+  font-weight: 600;
+  font-family: Archivo, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#page-create-success .page-content button:hover {
+  background-color: var(--color-secondary-dark);
+  
+}
+
+
+
+
+@media (max-width: 700px) {
+  #page-create-success .page-content .titles h1 {
+      font: 700 2.5rem Archivo, sans-serif;
+      color: var(--color-button-text);
+      margin-top: 52px;
+  }
+  
+  #page-create-success .page-content .titles p {
+      font: 400 1rem Poppins, sans-serif;
+      max-width: 286px;
+      line-height: 2rem;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--color-button-p);
+  }
+
+  #page-create-success .page-content button {
+      width: 132px;
+      height: 36px;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+  }
+}
+
+@media (min-width: 701px){
+  #page-create-success .page-content .titles h1 {
+      font-size: 4rem;
+      color: var(--color-button-text);
+      margin-top: 52px;
+  }
+
+  #page-create-success .page-content .titles p {
+      font: 400 1.4rem Poppins, sans-serif;
+      max-width: 415px;
+      line-height: 2rem;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--color-button-p);
+  }
+
+  #page-create-success .page-content button {
+      width: 152px;
+      height: 46px;
+      font-size: 1.3rem;
+      margin-top: 2rem;
+  }
+}
+
+@media (min-width: 900px){
+  #page-create-success .page-content .titles h1 {
+      font-size: 5.4rem;
+      color: var(--color-button-text);
+      margin-top: 52px;
+  }
+
+  #page-create-success .page-content .titles p {
+      font: 400 1.6rem Poppins, sans-serif;
+      max-width: 473px;
+      line-height: 2rem;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--color-button-p);
+  }
+
+  #page-create-success .page-content button {
+      width: 162px;
+      height: 56px;
+      margin-top: 2.4rem;
+      font-size: 1.6rem;
+  }
+}
+

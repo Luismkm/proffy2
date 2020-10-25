@@ -22,7 +22,11 @@ function Login() {
                  <div className="remember">
                    <input type="checkbox" name="remember" id="remember"/>
                     <span>Lembrar-me</span>
-                    <span>Esqueci minha senha</span>
+                    <Link className="forgotPassword" to='/ForgotPassword'>
+                      
+                      <span>Esqueci minha senha</span>
+                    
+                    </Link>
                  </div>
                  <button>Entrar</button>
              </fieldset>

@@ -1,4 +1,4 @@
-#page-create-account {
+#page-alter-password {
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -6,51 +6,50 @@
     overflow: hidden;
 }
 
-#page-create-account .backIcon {
+#page-alter-password .backIcon {
     display: none;
 }
 
-#page-create-account .form-content {
+#page-alter-password .form-content{
     background-color: var(--color-background);
 }
 
-#page-create-account .form-content main {
-    background-color: var(--color-background);  
+#page-alter-password .form-content main {
+    background-color: var(--color-background);
     max-width: 35rem;
     height: 100vh;
     margin: -3.2rem auto;
     border-radius: 0.8rem;
 
-
 }
 
-#page-create-account .form-content main fieldset {
+#page-alter-password .form-content main fieldset {
     border: 0;
     padding: 0 2.4rem;
 }
 
-#page-create-account .form-content main fieldset span {
+#page-alter-password .form-content main fieldset span {
     font: 400 1.2rem Poppins;
     color: var(--color-text-complement);
 }
 
-#page-create-account .form-content main fieldset legend {
+#page-alter-password .form-content main fieldset legend {
     font: 600 2rem Poppins;
     color: var(--color-text-title);
     padding: 1rem 0 0.8rem 0;
 }
 
-#page-create-account .form-content input {
+#page-alter-password .form-content input {
     font: 400 1.2rem Poppins;
 }
 
-#page-create-account .form-content p {
+#page-alter-password .form-content p {
     font: 400 1.2rem Poppins;
     width: 183px;
     padding-bottom: 5px;
 }
 
-#page-create-account .form-content main fieldset button {
+#page-alter-password .form-content main fieldset button {
     width: 100%;
     height: 5.6rem;
     border-radius: 0.8rem;
@@ -63,59 +62,59 @@
     transition: background-color 0.2s;
 }
 
-#page-create-account .form-content main fieldset button:hover {
+#page-alter-password .form-content main fieldset button:hover {
     background-color: var(--color-secondary-dark);
     
 }
 
 @media(min-width: 700px){
-    #page-create-account {
+    #page-alter-password {
         display: grid;
         grid-template-columns: 50% 50%;
         grid-template-areas:
           "form logo";
     }
 
-    #page-create-account .backIcon {
+    #page-alter-password .backIcon {
         display: inline;
         margin-left: -295px;
         margin-bottom: 73px;
     }
 
-    #page-create-account .backIcon:hover {
+    #page-alter-password .backIcon:hover {
         opacity: 0.7;
     }
 
-    #page-create-account .form-content main {
-        background-color: var(--color-background);
+    #page-alter-password .form-content main {
+        /* background-color: var(--color-background); */
         max-width: 35rem;
         border-radius: 0.8rem;
         margin: 0;
     
     }
 
-    #page-create-account .form-content main fieldset legend {
+    #page-alter-password .form-content main fieldset legend {
         font: 600 3.6rem Poppins;
         color: var(--color-text-title);
         padding: 1rem 0 0.8rem 0;
     }
     
-    #page-create-account .form-content input {
+    #page-alter-password .form-content input {
         font: 400 1.6rem Poppins;
     }
     
-    #page-create-account .form-content p {
+    #page-alter-password .form-content p {
         font: 400 1.6rem Poppins;
         width: 233px;
         padding-bottom: 5px;
     }
 
-    #page-create-account .logoAside-component {
+    #page-alter-password .logoAside-component {
         width: 100%;
         grid-area: logo;
     }
 
-    #page-create-account .form-content {
+    #page-alter-password .form-content {
         width: 100%;
         grid-area: form;
         display: flex;

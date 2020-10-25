@@ -6,20 +6,6 @@
     overflow: hidden;
 }
 
-/* #logo-content {
-    height: 40%;
-    background-color: var(--color-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
-
-#logo-content img {
-    height: 32rem;
-    overflow: hidden;   
-} */
-
 #page-login .form-content {
     height: 60%;
     width: 100%;
@@ -39,14 +25,14 @@
     padding: 0 2.4rem;
 }
 
-#page-login .form-content main fieldset span {
+#page-login .form-content main fieldset .forgotPassword, span {
     font: 400 1.2rem Poppins;
     color: var(--color-text-complement);
     height: 15px;
 }
 
 #page-login .form-content main fieldset legend {
-    font: 600 2.6rem Poppins;
+    font: 600 2rem Poppins;
     color: var(--color-text-title);
     padding: 2rem 0;
 }
@@ -60,6 +46,10 @@
 
 #page-login .form-content main fieldset .remember input + span {
     margin-left: -6.5rem;
+}
+
+#page-login  .form-content input {
+    font: 400 1.2rem Poppins;
 }
 
 #page-login .form-content main fieldset button {
@@ -80,18 +70,12 @@
     color: var(--color-button-text);
 }
 
-/* #page-login .form-content .inputblock input {
-    width: 100%;
-    height: 5.6rem;
-    border-radius: 0.8rem;
-    border: 0.1rem solid var(--color-line-in-white);
-    padding: 0 1.6rem;
-    background: var(--color-input-background);
-} */
+#page-login .form-content .forgotPassword {
+    text-decoration:none !important;
+}
 
-#page-login .form-content main fieldset span + span:hover {
+#page-login .form-content .forgotPassword:hover {
     border-bottom: solid 0.1rem var(--color-text-complement);
-    cursor: pointer;
 }
 
 #page-login .form-content footer {
@@ -106,13 +90,13 @@
 }
 
 #page-login .form-content footer > p {
-    font: 400 1.5rem Poppins;
+    font: 400 1.2rem Poppins;
     color: var(--color-text-base);
     line-height: 2.2rem;
 }
 
 #page-login .form-content footer p > span {
-    font: 600 1.5rem Poppins;
+    font: 600 1.2rem Poppins;
     color: var(--color-primary);
     cursor: pointer;
     transition: opacity 0.2s;
@@ -131,17 +115,25 @@
         width: 100vw;
         height: 100vh;
     }
-    
-    /* #logo-content {
-        width: 50%;
-        height: 100vh;
-        background-color: var(--color-primary);
-        align-items: center;
+
+    #page-login .form-content main fieldset legend {
+        font-size: 2.5rem;
     }
 
-    #logo-content img {
-        height: 60rem;
-    } */
+    #page-login  .form-content input {
+        font-size: 1.5rem;
+    }
+
+    #page-login .form-content footer > p {
+        font-size: 1.5rem;
+    }
+
+    #page-login .form-content footer p > span {
+        font-size: 1.5rem;
+    }
+
+
+
     
     #page-login .form-content {
         width: 50%;

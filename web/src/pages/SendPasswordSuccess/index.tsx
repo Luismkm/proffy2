@@ -4,19 +4,19 @@ import { Link } from 'react-router-dom'
 import './styles.css'
 import img_back from '../../assets/images/pg-success.svg'
 
-function PageCreateSuccess() {
+function SendPasswordSuccess() {
   return(
     <div id="page-create-success">
       <div className="page-content">
         <img src={img_back} alt="back" />
 
         <div className="titles">
-          <h1>Cadastro concluído</h1>
-          <p>Agora você faz parte da plataforma da Proffy.
-            Tenha uma ótima experiência.
+          <h1>Redefinição enviada!</h1>
+          <p>Boa, agora é só checar o e-mail que foi enviado para você
+              redefinir sua senha e aproveitar os estudos.
           </p>
           <Link to='/'>
-            <button>Fazer login</button>
+            <button>Voltar ao login</button>
           </Link>
         </div>
     
@@ -25,4 +25,4 @@ function PageCreateSuccess() {
     )
 }
 
-export default PageCreateSuccess
+export default SendPasswordSuccess

@@ -8,26 +8,23 @@ import PageContent from '../../assets/components/PageContent'
 import LogoAside from '../../assets/components/LogoAside'
 import Input from '../../assets/components/Input'
 
-function CreateAccount() {
+function ForgotPassword() {
     return(
      <>
-        <div id="page-create-account">     
+        <div id="page-alter-password">     
           <LogoAside />
            <div className="form-content">
              <Link to='/' className="backIcon" title="Voltar">
                <img src={back} alt="Voltar" />
              </Link>
-            <PageContent
-            label='Cadastro'
-            description='Preencha os dados abaixo para começar.' 
-            button='Concluir cadastro'
-            linkTo='/PageCreateSuccess'
+            <PageContent 
+            label='Eita, esqueceu sua senha?'
+            description='Não esquenta, vamos dar um jeito nisso.' 
+            button='Enviar'
+            linkTo='/SendPasswordSuccess'
             >
             <div className="inputblock">
-              <Input type="text" name="name" placeholder="Nome" />
-              <Input type="text" name="lastName" placeholder="Sobrenome" />
               <Input type="text" name="email" placeholder="E-mail" />
-              <Input type="password" name="password" placeholder="Senha" />
             </div>
             </PageContent>
            </div>
@@ -36,4 +33,4 @@ function CreateAccount() {
     )
 }
 
-export default CreateAccount
+export default ForgotPassword

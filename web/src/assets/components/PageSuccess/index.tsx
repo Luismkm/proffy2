@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './styles.css'
 import img_back from '../../images/pg-success.svg'
@@ -13,7 +14,9 @@ function PageSuccess() {
 					<p>Agora você faz parte da plataforma da Proffy.
 						Tenha uma ótima experiência.
 					</p>
-					<button>Fazer login</button>
+					<Link to='/'>
+						<button>Fazer login</button>
+					</Link>
 				</div>
 			
 			</div>
