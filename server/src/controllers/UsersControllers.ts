@@ -5,44 +5,45 @@ import db from '../database/connection'
 
 export default class UsersControllers {
 
-    async create( req: Request, res: Response){
-        const {
-            name,
-            lastname,
-            email,
-        } = req.body
+  async create( req: Request, res: Response){
+    const {
+        name,
+        lastname,
+        email,
+    } = req.body
 
-        let { password } = req.body
+    let { password } = req.body
 
-        try {
-            const salt = await bcrypt.genSalt(10)
-            password = await bcrypt.hash(password, salt)
-        } catch (error) {
-            return res.status(400).json({
-                error: 'Unexpected error while bcrypt'
-            })    
-        }
+    try {
 
-        const trx = await db.transaction()
+      const salt = await bcrypt.genSalt(10)
+      password = await bcrypt.hash(password, salt)
 
-        try {
-            await trx('users').insert({
-                name,
-                lastname,
-                email,
-                password
-            })
+    } catch (error) {
 
-            await trx.commit()
-            return res.status(201).send()
+      return res.status(400).json({
+        error: 'Unexpected error while bcrypt'
+      })    
+    }
 
-        } catch (err) {
-            await trx.rollback()
-            return res.status(400).json({
-                error: 'Unexpected error while creating new user'
-            })    
-        }
+    const trx = await db.transaction()
 
-        // return res.status(200).json({ message: 'Success' })
+    try {
+      await trx('users').insert({
+        name,
+        lastname,
+        email,
+        password
+      })
+
+      await trx.commit()
+      return res.status(201).send()
+
+    } catch (err) {
+          await trx.rollback()
+          return res.status(400).json({
+             error: 'Unexpected error while creating new user'
+          })    
+      }
     }
 }

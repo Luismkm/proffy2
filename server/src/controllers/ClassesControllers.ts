@@ -37,7 +37,7 @@ export default class ClassesControllers{
           .where('classes.subject', '=', subject)
           .join('users', 'classes.user_id', '=', 'users.id')
           .select(['classes.*', 'users.*'])
-
+         
         return res.json(classes)
     }
 
@@ -78,7 +78,7 @@ export default class ClassesControllers{
      
           await trx('class_schedule').insert(classSchedule) 
           await trx.commit()
-          return res.status(201).send()
+          return res.status(201).json({ message: 'Success' })
 
         }catch(err){
           await trx.rollback()
