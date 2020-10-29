@@ -1,4 +1,6 @@
 :root {
+    --color-primary-lighter: #9871F5;
+    --color-primary-light: #916BEA;
     --color-primary: #8257e5;
     --color-background: #F0F0F7;
     --color-text-title: #32264D;
@@ -7,7 +9,7 @@
     --color-text-complement: #9C98A6;
     --color-button-background: #DCDCE5;
     --color-button-text: #FFFFFF;
-    --color-button-p: #D4C2FF;
+    --color-text-in-primary: #D4C2FF;
     --color-text-base: #6A6180;
     --color-secondary: #04D361;
     --color-secondary-dark: #04BF58;

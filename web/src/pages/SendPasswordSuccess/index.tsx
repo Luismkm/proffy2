@@ -6,7 +6,7 @@ import img_back from '../../assets/images/pg-success.svg'
 
 function SendPasswordSuccess() {
   return(
-    <div id="page-create-success">
+    <div id="page-send-password-success">
       <div className="page-content">
         <img src={img_back} alt="back" />
 

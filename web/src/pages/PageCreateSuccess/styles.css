@@ -60,7 +60,7 @@
         line-height: 2rem;
         text-align: center;
         margin-top: 10px;
-        color: var(--color-button-p);
+        color: var(--color-text-in-primary);
     }
 
     #page-create-success .page-content button {
@@ -84,7 +84,7 @@
         line-height: 2rem;
         text-align: center;
         margin-top: 10px;
-        color: var(--color-button-p);
+        color: var(--color-text-in-primary);
     }
 
     #page-create-success .page-content button {
@@ -108,7 +108,7 @@
         line-height: 2rem;
         text-align: center;
         margin-top: 10px;
-        color: var(--color-button-p);
+        color: var(--color-text-in-primary);
     }
 
     #page-create-success .page-content button {
