@@ -1,0 +1,139 @@
+#page_profile{
+  overflow: hidden;
+  background-color: var(--color-background);
+}
+#page_profile #top_content {
+  display: flex;
+  justify-content: center;
+ /*  align-items: center; */
+  width: 100vw;
+  height: 40rem;
+  background-color: var(--color-primary);
+}
+
+#page_profile #top_content img:first-child {
+  width: 100rem;
+}
+
+#page_profile #top_content .avatar {
+  position: absolute;
+  text-align: center;
+}
+
+#page_profile #top_content .avatar img+p{
+  font: 700 3.6rem Archivo;
+  color: var(--color-button-text)
+}
+
+#page_profile #top_content .avatar img+img {
+  width: 4.8rem;
+  height: 4.8rem;
+  margin-left: -52px;
+}
+
+#page_profile #top_content .avatar p+p {
+  font: 400 2.4rem Poppins;
+  color: var(-color-text-in-primary)
+}
+
+#page_profile #top_content .avatar img {
+  border-radius: 50%;
+  width: 18rem;
+  height: 18rem;
+}
+
+#page_profile #main_content {
+  background: var(--color-button-text);
+    width: 100%;
+    /* height: 100vh; */
+    max-width: 74rem;
+    border-radius: 0.8rem;
+    margin: -3.2rem auto;
+    padding: 5.0rem;
+    overflow: hidden;
+    position: relative;
+}
+
+
+#page_profile #main_content span {
+  display: flex;
+  height: 100px;
+}
+
+#page_profile #main_content main fieldset {
+  border: 0;
+  padding: 0 2.4rem;
+}
+
+#page_profile #main_content  main fieldset + fieldset {
+  margin-top: 6.4rem;
+}
+
+#page_profile #main_content  main fieldset legend {
+  font: 700 2.4rem Archivo;
+  color: var(--color-text-title);
+  margin-bottom: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--color-line-in-white);
+}
+
+#page_profile #main_content .inputEmail {
+  width: 384px;
+}
+
+#page_profile #main_content .aboutBlock {
+  display: flex;
+}
+
+#page_profile #main_content .aboutBlock select {
+  width: 384px;
+}
+
+#page_profile #main_content .aboutBlock .input-block label {
+  margin-left: 1.8rem;
+}
+
+#page_profile #main_content .aboutBlock Input {
+  margin-left: 1.8rem;
+}
+
+#page_profile #main_content .hoursLabel span {
+  display: inline;
+}
+
+#page_profile #main_content .hoursLabel legend {
+  display: inline;
+}
+
+#page_profile #main_content .hoursLabel p {
+  font: 600 1.4rem Archivo;
+  color: var(--color-text-delete);
+  margin-top: -6px;
+  background: var(--color-button-text);
+  width: 129px;
+  text-align: center;
+  margin-left: 267px;
+}
+
+#page_profile #main_content .hoursLabel p + span {
+  margin-top: 24px;
+}
+
+#page_profile #main_content .hoursLabel .hoursBlock {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-line-in-white);
+  height: 116px;
+}
+
+#page_profile #main_content .hoursLabel .hoursBlock .input-block label {
+  margin-left: 1.8rem;
+}
+
+#page_profile #main_content .hoursLabel .hoursBlock .input-block input {
+  margin-left: 1.8rem;
+}

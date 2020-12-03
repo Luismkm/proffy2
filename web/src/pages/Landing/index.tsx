@@ -18,7 +18,9 @@ function Landing(){
           <div id="header-landing">
            
             <span>
-               <img className="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU" alt=""/>
+              <Link to="/profile">  
+               <img className="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU" alt="Avatar"/>
+              </Link>
               <p>Luis Marcelo Krautiuk</p>
             </span>
             <img src={logoutIcon} alt="Sair"/>

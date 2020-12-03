@@ -1,0 +1,22 @@
+#header-component {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-background-secondary);
+  padding: 0 64px 0 64px;
+}
+
+#header-component img{
+  width: 32px;
+  height: 49px;
+}
+
+#header-component p {
+  color: var(--color-text-in-primary);
+  font: 400 1.6rem Archivo;
+}
+
+#header-component p+img {
+  width: 52px;
+  height: 15px;
+}
