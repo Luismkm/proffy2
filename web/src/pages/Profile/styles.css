@@ -1,6 +1,7 @@
 #page_profile{
   overflow: hidden;
   background-color: var(--color-background);
+  padding-bottom: 54px;
 }
 #page_profile #top_content {
   display: flex;
@@ -18,6 +19,9 @@
 #page_profile #top_content .avatar {
   position: absolute;
   text-align: center;
+  margin-top: 52px;
+  width: 192px;
+  height: 270px;
 }
 
 #page_profile #top_content .avatar img+p{
@@ -25,10 +29,22 @@
   color: var(--color-button-text)
 }
 
-#page_profile #top_content .avatar img+img {
+#page_profile #top_content .avatar input[type='file'] {
+  display: none
+}
+
+#page_profile #top_content .avatar .cameraIcon {
   width: 4.8rem;
   height: 4.8rem;
-  margin-left: -52px;
+  margin-left: 92px;
+  margin-top: -48px;
+  cursor: pointer;
+}
+
+#page_profile #top_content .avatar .cameraIcon:hover{
+ /*  border: 1px solid var(--color-secondary-dark); */
+ width: 4.9rem;
+ height: 4.9rem;
 }
 
 #page_profile #top_content .avatar p+p {
@@ -42,14 +58,21 @@
   height: 18rem;
 }
 
+#page_profile #top_content .avatar #avatarArea {
+  border-radius: 50%;
+  width: 18rem;
+  height: 18rem;
+  background: #ccc;
+}
+
 #page_profile #main_content {
   background: var(--color-button-text);
     width: 100%;
     /* height: 100vh; */
     max-width: 74rem;
     border-radius: 0.8rem;
-    margin: -3.2rem auto;
-    padding: 5.0rem;
+    margin: -3.2rem auto 0 auto;
+    padding: 5.0rem 5.0rem 0 5.0rem;
     overflow: hidden;
     position: relative;
 }
@@ -99,6 +122,7 @@
 
 #page_profile #main_content .aboutBlock Input {
   margin-left: 1.8rem;
+  width: 92%;
 }
 
 #page_profile #main_content .hoursLabel span {
@@ -107,6 +131,20 @@
 
 #page_profile #main_content .hoursLabel legend {
   display: inline;
+}
+
+#page_profile #main_content .hoursLabel legend span {
+  font: 600 1.6rem Archivo;
+  color: var( --color-primary);
+  margin-left: 225px;
+  border: 1px solid var(--color-button-text);
+  border-radius: 7%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#page_profile #main_content .hoursLabel legend span:hover {
+  border: 1px solid;
 }
 
 #page_profile #main_content .hoursLabel p {
@@ -136,4 +174,48 @@
 
 #page_profile #main_content .hoursLabel .hoursBlock .input-block input {
   margin-left: 1.8rem;
+  width: 91%;
+}
+
+#page_profile #footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12rem;
+  padding: 0 21px;
+}
+
+#page_profile #footer #attectionBlock {
+  display: flex;
+}
+
+#page_profile #footer p {
+  height: 4.2rem;
+  margin-left: 0.8rem;
+  color: var( --color-primary);
+  font: 400 1.2rem Poppins;
+}
+
+#page_profile #footer span {
+  height: 0;
+}
+
+#page_profile #footer button {
+  background: var(--color-secondary);
+  width: 19.7rem;
+  height: 5.6rem;
+  border-radius: 0.8rem;
+  font: 600 1.6rem Archivo;
+  color: var(--color-button-text);
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+#page_profile #footer button:hover{
+  background: var(--color-secondary-dark);
 }

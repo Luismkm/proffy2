@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import './styles.css'
 import Header from '../../assets/components/Header'
@@ -7,8 +7,21 @@ import TextArea from '../../assets/components/TextArea'
 import Select from '../../assets/components/Select'
 import imgBackground from '../../assets/images/background-profile.svg'
 import cameraIcon from '../../assets/images/icons/camera.svg'
+import attenctionIcon from '../../assets/images/icons/warning.svg'
 
 function Profile (){
+  const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
+  /* {uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU' } */
+  function handleFile(e:any){
+/*    console.log(e.target)
+   setAvatar(e.target.files[0].name) */
+   if (e.target.files.length > 0) {
+    const file = URL.createObjectURL(e.target.files[0]);
+    setAvatar(file);
+}
+   return
+  }
+
   return (
     <>
       <Header title="Meu perfil" />
@@ -16,8 +29,24 @@ function Profile (){
         <div id="top_content">
           <img src={imgBackground} alt="Textura"/>
           <span className="avatar">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU" alt="Avatar"/>
-            <img src={cameraIcon} alt="Icon"/>
+            <div id="avatarArea">
+              <img src={avatar} alt="Avatar"/>
+            </div>
+           
+            
+            {/* <label htmlFor='selecao-arquivo'>Selecionar um arquivo &#187;</label>
+            <input id='selecao-arquivo' type='file'> */}
+
+            <label htmlFor='file'>
+              <img className="cameraIcon" src={cameraIcon} alt="Icon"/>
+            </label>
+            <input
+              onChange={(e) => handleFile(e)} 
+              type="file" 
+              name="file" 
+              id="file"/>
+
+            {/* <img src={cameraIcon} alt="Icon"/> */}
             <p>Luis Moraes</p>
             <p>Geografia</p>
           </span>
@@ -105,11 +134,18 @@ function Profile (){
               <p>Excluir horário</p>       
             </fieldset>
         </main>
+        <div id="footer">
+          
+          <div id="attectionBlock">
+            <img src={attenctionIcon} alt="Atenção"/>
+            <p>Importante! <span>Preencha todos os dados corretamente.</span> </p>          
+          </div>
+         
+          <button type="button">Salvar Cadastro</button>
+        </div>  
         </div>
         
-        <div id="footer">
-          <p>Ola</p>
-        </div>  
+       
        
       </div> 
     </>
