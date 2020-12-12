@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FormEvent } from 'react'
 
 import './styles.css'
 import Header from '../../assets/components/Header'
@@ -8,19 +8,53 @@ import Select from '../../assets/components/Select'
 import imgBackground from '../../assets/images/background-profile.svg'
 import cameraIcon from '../../assets/images/icons/camera.svg'
 import attenctionIcon from '../../assets/images/icons/warning.svg'
+import api from '../../services/api'
 
 function Profile (){
   const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
-  /* {uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU' } */
-  function handleFile(e:any){
-/*    console.log(e.target)
-   setAvatar(e.target.files[0].name) */
-   if (e.target.files.length > 0) {
-    const file = URL.createObjectURL(e.target.files[0]);
-    setAvatar(file);
-}
+  const[imgFile, setImgFile] = useState('')
+  const[name, setName] = useState('')
+  const[lastname, setLastname] = useState('')
+  const[email, setEmail] = useState('')
+  const[whatsapp, setWhatsapp] = useState('')
+  const[bio, setBio] = useState('')
+  const[subject, setSubject] = useState('')
+  const[cost, setCost] = useState('')
+  const[weekday, setWeekday] = useState('')
+  const[from, setFrom] = useState('')
+  const[to, setTo] = useState('')
+
+  function handleFile(e:any) {
+    if (e.target.files.length > 0) {
+      const file = e.target.files[0]
+
+      const avatarPreview = URL.createObjectURL(file);
+
+      setImgFile(file)
+      setAvatar(avatarPreview)
+    }
    return
   }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+
+    const schedule = `${weekday},${from},${to}`
+
+    const data = new FormData()
+    data.append('user_id', '1')
+    data.append('avatar', imgFile)
+    data.append('whatsapp', whatsapp)
+    data.append('bio', bio)
+    data.append('subject', subject)
+    data.append('cost', cost)
+    data.append('schedule', schedule)
+
+    await api.post('classes', data)
+    alert('Cadastro')
+  }
+
+  
 
   return (
     <>
@@ -40,11 +74,13 @@ function Profile (){
             <label htmlFor='file'>
               <img className="cameraIcon" src={cameraIcon} alt="Icon"/>
             </label>
-            <input
+           {/*  <input
               onChange={(e) => handleFile(e)} 
               type="file" 
               name="file" 
-              id="file"/>
+              id="file"/> */}
+
+<input multiple onChange={(e) => handleFile(e)} type="file" id="file" />
 
             {/* <img src={cameraIcon} alt="Icon"/> */}
             <p>Luis Moraes</p>
@@ -53,18 +89,40 @@ function Profile (){
         </div>
 
         <div id="main_content">
+        <form onSubmit={handleSubmit}>
         <main>
            <fieldset>
             <legend>Seus dados</legend>
               <span>
-                <Input name="name" label="Nome" />
-                <Input name="lastname" label="Sobrenome" />
+                <Input 
+                  name="name" 
+                  label="Nome"
+                  onChange={ event => setName(event.target.value) } 
+                />
+                <Input 
+                  name="lastname" 
+                  label="Sobrenome"
+                  onChange={ event => setLastname(event.target.value) }
+                />
               </span>
               <span>  
-                <Input className="inputEmail" name="email" label="E-mail" />
-                <Input name="whatsapp" label="Whatsapp" />
+                <Input 
+                  className="inputEmail" 
+                  name="email" 
+                  label="E-mail"
+                  onChange={ event => setEmail(event.target.value) } 
+                />
+                <Input 
+                  name="whatsapp" 
+                  label="Whatsapp"
+                  onChange={ event => setWhatsapp(event.target.value) } 
+                />
               </span>
-              <TextArea name="bio" label="Biografia" />
+              <TextArea 
+                name="bio" 
+                label="Biografia" 
+                onChange={ event => setBio(event.target.value) }
+              />
              
             </fieldset>
 
@@ -85,9 +143,14 @@ function Profile (){
                   { value: 'Matemática', label: 'Matemática' },
                   { value: 'Português', label: 'Português' },
                   { value: 'Química', label: 'Química' },
-                ]}  
+                ]}
+                onChange={ event => setSubject(event.target.value) }  
                 />
-                <Input name="cost" label="Custo hora por aula" />
+                <Input 
+                  name="cost" 
+                  label="Custo hora por aula" 
+                  onChange={ event => setCost(event.target.value) }
+                />
                 </span>   
             </fieldset>
 
@@ -105,15 +168,24 @@ function Profile (){
                     { value: '4', label: 'Quinta-feira' },
                     { value: '5', label: 'Sexta-feira' },
                     { value: '6', label: 'Sábado' },   
-                  ]}  
+                  ]}
+                  onChange={ event => setWeekday(event.target.value) }  
                 />
-                <Input name="from" label="Das" />
-                <Input name="to" label="Até" />
+                <Input 
+                  name="from" 
+                  label="Das"
+                  onChange={ event => setFrom(event.target.value) }
+                />
+                <Input 
+                  name="to" 
+                  label="Até" 
+                  onChange={ event => setTo(event.target.value) }
+                />
                
               </span>    
               <p>Excluir horário</p>
 
-              <span className="hoursBlock">
+              {/*  <span className="hoursBlock">
                 <Select 
                   name="week_day"
                   label="Dia da semana"
@@ -131,7 +203,8 @@ function Profile (){
                 <Input name="to" label="Até" />
                
               </span>    
-              <p>Excluir horário</p>       
+              <p>Excluir horário</p> */}
+
             </fieldset>
         </main>
         <div id="footer">
@@ -141,8 +214,9 @@ function Profile (){
             <p>Importante! <span>Preencha todos os dados corretamente.</span> </p>          
           </div>
          
-          <button type="button">Salvar Cadastro</button>
-        </div>  
+          <button type="submit">Salvar Cadastro</button>
+        </div>
+        </form>    
         </div>
         
        

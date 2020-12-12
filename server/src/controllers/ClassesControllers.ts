@@ -4,7 +4,7 @@ import db from '../database/connection'
 import convertHourToMinutes from '../utils/convertHourToMinutes'
 
 interface ScheduleItem{
-    week_day: number;
+    week_day: string;
     from: string,
     to: string
 }
@@ -42,20 +42,33 @@ export default class ClassesControllers{
     }
 
     async create(req: Request, res: Response){
+
         const {
           user_id,
-          avatar,
           whatsapp,
           bio,
           subject,
           cost,
           schedule
         } = req.body
-    
+
+        const avatar = req.file.filename
+
+        const new_schedule = String(schedule)
+        .split(',')
+        .map(item => item.trim())
+
+        const sche = [{
+          week_day: new_schedule[0],
+          from: new_schedule[1],
+          to: new_schedule[2]
+
+        }]
+
         const trx = await db.transaction()
     
         try{
-      
+          
           const insertedClassesIds = await trx('classes').insert({
             avatar,
             whatsapp,
@@ -64,10 +77,10 @@ export default class ClassesControllers{
             cost,
             user_id,
           })
-      
+          
           const class_id = insertedClassesIds[0]
-      
-          const classSchedule = schedule.map((scheduleItem: ScheduleItem) => {
+         
+          const classSchedule = sche.map((scheduleItem: ScheduleItem) => {
               return {
                   class_id,
                   week_day: scheduleItem.week_day,
@@ -75,14 +88,16 @@ export default class ClassesControllers{
                   to: convertHourToMinutes(scheduleItem.to)
               }
           })
-     
+
+         
+
           await trx('class_schedule').insert(classSchedule) 
           await trx.commit()
           return res.status(201).json({ message: 'Success' })
 
         }catch(err){
           await trx.rollback()
-
+          
           return res.status(400).json({
             error: 'Unexpected error while creating new class'
           })
