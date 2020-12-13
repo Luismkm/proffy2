@@ -1,0 +1,264 @@
+#page_giveClasses{
+  overflow: hidden;
+  background-color: var(--color-background);
+  padding-bottom: 54px;
+}
+
+#page_giveClasses #top_content {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 30rem;
+  background-color: var(--color-primary);
+}
+
+#page_giveClasses #top_content h1 {
+  font: 700 3.6rem Archivo;
+  color: var(--color-button-text);
+}
+
+#page_giveClasses #top_content h3 {
+  font: 400 1.6rem Poppins;
+  color: var(--color-text-in-primary);
+  margin-top: 3rem;
+}
+
+#page_giveClasses #top_content  {
+  display: flex;
+ 
+}
+
+#page_giveClasses #content {
+  width: 100%;
+  max-width: 83rem;
+  margin: 0.8rem auto 0 auto;
+  padding: 5.0rem 5.0rem 0 5.0rem;
+} 
+
+#page_giveClasses #content #span_content {
+ display:  flex;
+ justify-content: space-between;
+}
+
+#page_giveClasses #content #span_content span {
+  display: flex;
+  padding-top: 3rem;
+}
+
+#page_giveClasses #content #span_content span p {
+  margin-left: 1.5rem;
+  font: 400 1.2rem Poppins;
+  color: var(--color-text-in-primary);
+}
+
+#page_giveClasses #content #span_content span img {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-top: 0.5rem;
+}
+
+#page_giveClasses #main_content {
+  background: var(--color-button-text);
+    width: 100%;
+    /* height: 100vh; */
+    max-width: 74rem;
+    border-radius: 0.8rem;
+    margin: -3.2rem auto 0 auto;
+    padding: 5.0rem 5.0rem 0 5.0rem;
+    overflow: hidden;
+    position: relative;
+}
+
+#page_giveClasses #main_content #avatar_content {
+  height: 127px;
+  display:  flex;
+  justify-content: space-between;
+}
+
+#page_giveClasses  #avatar_content #avatarArea {
+  border-radius: 50%;
+  width: 352px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#page_giveClasses  #avatar_content #avatarArea p {
+  font: 700 2rem Archivo;
+  color: var(--color-text-title);
+  width: 273px;
+  height: 27px;
+  margin-left: 20px;
+}
+
+#page_giveClasses  #avatar_content #avatarArea img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  background: #ccc;
+ 
+}
+
+#page_giveClasses #top_content .avatar #avatarArea {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+}
+
+
+#page_giveClasses #main_content #avatar_content span {
+  height: 79px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#page_giveClasses #main_content #avatar_content img {
+  width: 80px;
+  height: 80px;
+}
+
+
+#page_giveClasses #main_content span {
+  display: flex;
+  height: 100px;
+}
+
+#page_giveClasses #main_content main fieldset {
+  border: 0;
+  padding: 0 2.4rem;
+}
+
+#page_giveClasses #main_content  main fieldset + fieldset {
+  margin-top: 6.4rem;
+}
+
+#page_giveClasses #main_content  main fieldset legend {
+  font: 700 2.4rem Archivo;
+  color: var(--color-text-title);
+  margin-bottom: 2.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-bottom: 1.6rem;
+  border-bottom: 1px solid var(--color-line-in-white);
+}
+
+#page_giveClasses #main_content .inputEmail {
+  width: 384px;
+}
+
+#page_giveClasses #main_content .aboutBlock {
+  display: flex;
+}
+
+#page_giveClasses #main_content .aboutBlock select {
+  width: 384px;
+}
+
+#page_giveClasses #main_content .aboutBlock .input-block label {
+  margin-left: 1.8rem;
+}
+
+#page_giveClasses #main_content .aboutBlock Input {
+  margin-left: 1.8rem;
+  width: 92%;
+}
+
+#page_giveClasses #main_content .hoursLabel span {
+  display: inline;
+}
+
+#page_giveClasses #main_content .hoursLabel legend {
+  display: inline;
+}
+
+#page_giveClasses #main_content .hoursLabel legend span {
+  font: 600 1.6rem Archivo;
+  color: var( --color-primary);
+  margin-left: 225px;
+  border: 1px solid var(--color-button-text);
+  border-radius: 7%;
+  padding: 5px;
+  cursor: pointer;
+}
+
+#page_giveClasses #main_content .hoursLabel legend span:hover {
+  border: 1px solid;
+}
+
+#page_giveClasses #main_content .hoursLabel p {
+  font: 600 1.4rem Archivo;
+  color: var(--color-text-delete);
+  margin-top: -6px;
+  background: var(--color-button-text);
+  width: 129px;
+  text-align: center;
+  margin-left: 267px;
+}
+
+#page_giveClasses #main_content .hoursLabel p + span {
+  margin-top: 24px;
+}
+
+#page_giveClasses #main_content .hoursLabel .hoursBlock {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-line-in-white);
+  height: 116px;
+}
+
+#page_giveClasses #main_content .hoursLabel .hoursBlock .input-block label {
+  margin-left: 1.8rem;
+}
+
+#page_giveClasses #main_content .hoursLabel .hoursBlock .input-block input {
+  margin-left: 1.8rem;
+  width: 91%;
+}
+
+#page_giveClasses #footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 12rem;
+  padding: 0 21px;
+}
+
+#page_giveClasses #footer #attectionBlock {
+  display: flex;
+}
+
+#page_giveClasses #footer p {
+  height: 4.2rem;
+  margin-left: 0.8rem;
+  color: var( --color-primary);
+  font: 400 1.2rem Poppins;
+}
+
+#page_giveClasses #footer span {
+  height: 0;
+}
+
+#page_giveClasses #footer button {
+  background: var(--color-secondary);
+  width: 19.7rem;
+  height: 5.6rem;
+  border-radius: 0.8rem;
+  font: 600 1.6rem Archivo;
+  color: var(--color-button-text);
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+#page_giveClasses #footer button:hover{
+  background: var(--color-secondary-dark);
+}

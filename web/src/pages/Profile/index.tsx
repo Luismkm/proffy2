@@ -132,6 +132,7 @@ function Profile (){
                 <Select 
                 name="subject"
                 label="Matéria"
+                defaultValue="Selecione uma opção"
                 options={[
                   { value: 'Artes', label: 'Artes' },
                   { value: 'Biologia', label: 'Biologia' },
@@ -160,6 +161,7 @@ function Profile (){
                 <Select 
                   name="week_day"
                   label="Dia da semana"
+                  defaultValue="Selecione uma opção"
                   options={[
                     { value: '0', label: 'Domingo' },
                     { value: '1', label: 'Segunda-feira' },
