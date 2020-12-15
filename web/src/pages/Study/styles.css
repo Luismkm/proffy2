@@ -1,0 +1,79 @@
+#page_study {
+  overflow: hidden;
+  background-color: var(--color-background);
+  padding-bottom: 54px;
+}
+
+#page_study #top_content {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  height: 25.4rem;
+  background-color: var(--color-primary);
+}
+
+#page_study #top_content h1 {
+  font: 700 3.6rem Archivo;
+  color: var(--color-button-text);
+}
+ 
+#page_study #search-teachers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 16px;
+  position: absolute;
+  top: 248px;
+  width: 74rem;
+}
+
+#page_study #search-teachers label {
+  font: 400 1.4rem Poppins;
+  color: var(--color-text-in-primary);
+}
+ 
+#page_study #search-teachers .input-block + .input-block, 
+#page_study #search-teachers .select-block + .select-block  {
+  margin-top: 0;
+}
+
+ #page_study #content {
+  width: 100%;
+  max-width: 85rem;
+  margin: 0.8rem auto 0 auto;
+  padding: 5.0rem 5.0rem 0 5.0rem;
+} 
+
+
+#page_study #content #span_content {
+ display:  flex;
+ justify-content: space-between;
+ height: 100px;
+}
+
+#page_study #content #span_content span {
+  display: flex;
+  padding-top: 3rem;
+  margin-right: 12px;
+}
+
+#page_study #content #span_content span p {
+  margin-left: 1.5rem;
+  font: 400 1.2rem Poppins;
+  color: var(--color-text-in-primary);
+}
+
+#page_study #content #span_content span img {
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-top: 0.5rem;
+}
+
+#page_study #main_content {
+  width: 100%;
+  max-width: 78rem;
+  border-radius: 0.8rem;
+  margin: 2.8rem auto 0 auto;
+  padding: 2.0rem 2.0rem 0 2.0rem;
+  overflow: hidden;
+  position: relative;
+}

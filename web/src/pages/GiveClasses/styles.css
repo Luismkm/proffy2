@@ -8,7 +8,7 @@
   display: flex;
   justify-content: center;
   width: 100vw;
-  height: 30rem;
+  height: 25.4rem;
   background-color: var(--color-primary);
 }
 
@@ -31,8 +31,7 @@
 #page_giveClasses #content {
   width: 100%;
   max-width: 83rem;
-  margin: 0.8rem auto 0 auto;
-  padding: 5.0rem 5.0rem 0 5.0rem;
+  padding: 4.0rem 5.0rem 0 5.0rem;
 } 
 
 #page_giveClasses #content #span_content {
