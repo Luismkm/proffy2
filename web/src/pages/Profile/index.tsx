@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from 'react'
+import React, { useState, useEffect, FormEvent, ChangeEvent } from 'react'
 
 import './styles.css'
 import Header from '../../assets/components/Header'
@@ -10,36 +10,237 @@ import cameraIcon from '../../assets/images/icons/camera.svg'
 import attenctionIcon from '../../assets/images/icons/warning.svg'
 import api from '../../services/api'
 
+/* const session = JSON.parse(localStorage.getItem('@PFAuth:user') || '') */
+
+interface User {
+   id: number
+   avatar: string
+   name: string
+   lastname: string
+   email: string
+   whatsapp: string
+   subjects: Subjects
+}
+
+interface Schedule{ 
+  week_day: string,
+  day: string,
+  from: string,
+  to: string, 
+}
+
+interface newSchedule{ 
+  id: number
+  week_day: string,
+  day: string,
+  from: string,
+  to: string,
+  class_id: number,
+}
+
+interface Subjects {
+  subject_id: number,
+  subject: string
+  bio: string
+  cost: number
+}
+
+interface Option {
+  value: string
+  label: string
+}
+
+interface OptionWeekDay {
+  value: string
+  label: string
+}
+
+
 function Profile (){
-  const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
-  const[imgFile, setImgFile] = useState('')
+  //const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
+/*   const[imgFile, setImgFile] = useState('') */
+  
+  const[userId, setUserId] = useState()
+  const[avatar, setAvatar] = useState('')
   const[name, setName] = useState('')
   const[lastname, setLastname] = useState('')
   const[email, setEmail] = useState('')
   const[whatsapp, setWhatsapp] = useState('')
+
+  const[subjects, setSubjects] = useState<Subjects[]>([])
+
+  const[selectedSubject, setSelectedSubject] = useState<number>()
+
+  const[option, setOption] = useState<Option[]>([])
+
   const[bio, setBio] = useState('')
-  const[subject, setSubject] = useState('')
-  const[cost, setCost] = useState('')
-  const[weekday, setWeekday] = useState('')
-  const[from, setFrom] = useState('')
-  const[to, setTo] = useState('')
+  const[cost, setCost] = useState<number>()
+
+  const[schedule, setSchedule] = useState<newSchedule[]>([])
+
+
+
+
+
+  const[optionWeekDay, setOptionWeekday] = useState<OptionWeekDay[]>([])
+  /* const[user, setUser] = useState<User>({} as User) */
+  const[teste,setTeste] = useState<Schedule[]>([{ week_day:'', from:'', to:'', day:'' }])
+
+  const[inputSubject, setInputSubject] = useState('')
+  const[inputSubjectValue, setInputSubjectValue] = useState('')
+
+  const[inputSchedule, setInputSchedule] = useState()
+
+  const[newSchedule, setNewSchedule] = useState('')
+
+
+  useEffect(() =>{
+    api.get(`user/1`).then(response => {
+      const user = response.data[0]
+      const userData = response.data
+
+      setUserId(user.user_id)
+      setAvatar(user.avatar)
+      setName(user.name)
+      setLastname(user.lastname)
+      setEmail(user.email)
+      setWhatsapp(user.whatsapp)
+
+      const subjects = userData.map((data:any) => {
+        const subject = {
+          subject_id: data.id,
+          subject: data.subject,
+          bio: data.bio,
+          cost: data.cost,
+        }
+        return subject
+      })
+
+      setSubjects(subjects)
+
+      const subjectsOption = subjects.map((subject:any) => {
+        const option = {
+          value: subject.subject_id,
+          label: subject.subject,
+
+        }
+        return option
+      })
+
+      setOption(subjectsOption)
+      
+    })
+
+  },[])
+
+  useEffect(() => {
+
+    if(selectedSubject) {
+      
+      subjects.forEach((subject:Subjects) => {
+       
+        if(subject.subject_id === selectedSubject ) {
+          setBio(subject.bio)
+          setCost(subject.cost)
+        }
+
+      })
+
+      api.get(`schedule/${selectedSubject}`).then(response => {
+        const schedule = response.data
+        console.log(schedule)
+        setSchedule(schedule)
+      })
+    }
+    
+
+  },[selectedSubject])
+
 
   function handleFile(e:any) {
+   
     if (e.target.files.length > 0) {
       const file = e.target.files[0]
 
-      const avatarPreview = URL.createObjectURL(file);
-
-      setImgFile(file)
+      const avatarPreview = URL.createObjectURL(file)
       setAvatar(avatarPreview)
     }
    return
   }
 
+  function handleAtt(subj: any){
+    console.log('handleAtt')
+    if(inputSubject === ''){
+      setInputSubject(inputSubjectValue)
+    }else{
+      setInputSubject('')
+    }
+    
+   /*  setInputSubject(inp) */
+   /*  setTeste([])
+    setTeste(subj.schedule) */
+    /* const subjectData = subjects.filter(function(sub) {
+      return sub.subject === subj
+     }) */
+    
+     
+    
+  }
+
+
+
+  function handleSubject( event:ChangeEvent<HTMLSelectElement> ) {
+
+    const subjectValue = event.target.value
+    setSelectedSubject(parseInt(subjectValue))
+ 
+   /* const subjectValue = event.target.value
+   setInputSubject(subjectValue)
+   setInputSubjectValue(subjectValue)
+   const subjectData = subjects.filter(function(sub) {
+    return sub.subject === subjectValue
+   })
+
+  
+   setInputCost(String(subjectData[0].cost))
+   setInputBio(subjectData[0].bio) */
+   
+
+  }
+
+  function handleExclude(index: number){
+   console.log('exclude')
+    setInputSubject(inputSubjectValue)
+
+    teste.splice(index,1)
+    setTeste(teste)
+    handleAtt(teste)
+
+  
+   
+  }
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
+   
+    const data = new FormData()
+    data.append('user_id', '1')
+    data.append('avatar', avatar)
+    data.append('name', name)
+    data.append('lastname', lastname)
+    data.append('email', email)
+    data.append('whatsapp', whatsapp)
 
-    const schedule = `${weekday},${from},${to}`
+    data.append('bio', bio)
+    data.append('cost', String(cost))
+
+    teste.forEach(item => {
+      console.log(item)
+    })
+
+    /* data.append('schedule', teste) */
+
+  /*   const schedule = `${weekday},${from},${to}`
 
     const data = new FormData()
     data.append('user_id', '1')
@@ -50,29 +251,49 @@ function Profile (){
     data.append('cost', cost)
     data.append('schedule', schedule)
 
-    await api.post('classes', data)
+    await api.post('classes', data) */
     alert('Cadastro')
   }
 
+  function handleAddNewSchedule(){
+    setSubjects( [  ] )
+    console.log(teste)
+    if(!inputSubject){
+      alert('Selecione a matéria')
+    }
+ /*    console.log(subjects) */
+    
+    
+
+  setTeste( [...teste, { week_day:'', from:'', to:'', day:'' }] )
   
+    
+  }
+ 
+  
+  /* if (name === ''){
+    return <p>Carregando...</p>
+  } */
 
   return (
     <>
       <Header title="Meu perfil" />
       <div id="page_profile">
         <div id="top_content">
-          <img src={imgBackground} alt="Textura"/>
+          <img src={ imgBackground } alt="Textura"/>
           <span className="avatar">
             <div id="avatarArea">
-              <img src={avatar} alt="Avatar"/>
+              <img src={ avatar } alt="Avatar"/>
             </div>
+
+            
            
             
             {/* <label htmlFor='selecao-arquivo'>Selecionar um arquivo &#187;</label>
             <input id='selecao-arquivo' type='file'> */}
 
             <label htmlFor='file'>
-              <img className="cameraIcon" src={cameraIcon} alt="Icon"/>
+              <img className="cameraIcon" src={ cameraIcon } alt="Icon"/>
             </label>
            {/*  <input
               onChange={(e) => handleFile(e)} 
@@ -89,7 +310,7 @@ function Profile (){
         </div>
 
         <div id="main_content">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={ handleSubmit }>
         <main>
            <fieldset>
             <legend>Seus dados</legend>
@@ -97,12 +318,14 @@ function Profile (){
                 <Input 
                   name="name" 
                   label="Nome"
-                  onChange={ event => setName(event.target.value) } 
+                  value={ name }
+                  /* onChange={ event => setName( event.target.value ) }  */
                 />
                 <Input 
                   name="lastname" 
                   label="Sobrenome"
-                  onChange={ event => setLastname(event.target.value) }
+                  value={ lastname }
+                 /*  onChange={ event => setLastname( event.target.value ) } */
                 />
               </span>
               <span>  
@@ -110,31 +333,41 @@ function Profile (){
                   className="inputEmail" 
                   name="email" 
                   label="E-mail"
-                  onChange={ event => setEmail(event.target.value) } 
+                  value={ email }
+                  /* onChange={ event => setEmail( event.target.value ) }  */
                 />
                 <Input 
                   name="whatsapp" 
                   label="Whatsapp"
-                  onChange={ event => setWhatsapp(event.target.value) } 
+                  value={ whatsapp }
+                  /* onChange={ event => setWhatsapp( event.target.value ) }  */
                 />
               </span>
               <TextArea 
                 name="bio" 
-                label="Biografia" 
-                onChange={ event => setBio(event.target.value) }
+                label="Biografia"
+                value={ bio }
+               /*  onChange={ event => setBio( event.target.value ) } */
               />
              
             </fieldset>
 
             <fieldset>
             <legend>Sobre a aula</legend>
+
+           
               <span className="aboutBlock">
+
+              
                 <Select 
                 name="subject"
                 label="Matéria"
-                defaultValue="Selecione uma opção"
-                options={[
-                  { value: 'Artes', label: 'Artes' },
+                defaultValue="Suas matérias cadastradas"
+                onChange={ handleSubject } 
+                options={ option }
+
+
+                /*   { value: 'Artes', label: 'Artes' },
                   { value: 'Biologia', label: 'Biologia' },
                   { value: 'Ciências', label: 'Ciências' },
                   { value: 'Ed. Física', label: 'Ed. Física' },
@@ -143,25 +376,155 @@ function Profile (){
                   { value: 'História', label: 'História' },
                   { value: 'Matemática', label: 'Matemática' },
                   { value: 'Português', label: 'Português' },
-                  { value: 'Química', label: 'Química' },
-                ]}
-                onChange={ event => setSubject(event.target.value) }  
+                  { value: 'Química', label: 'Química' }, */
+                
+                
+                
+                
                 />
                 <Input 
                   name="cost" 
-                  label="Custo hora por aula" 
-                  onChange={ event => setCost(event.target.value) }
+                  label="Custo hora por aula"
+                  value={ cost } 
+                /*   onChange={ event => setCost(event.target.value) } */
                 />
                 </span>   
             </fieldset>
 
             <fieldset className="hoursLabel">
-            <legend>Horários disponíveis <span>+ Novo horário</span> </legend>
-              <span className="hoursBlock">
+            <legend>Horários disponíveis <span onClick={ () =>{ handleAddNewSchedule() } }>+ Novo horário</span> </legend>
+              
+
+              {
+                  schedule && schedule.map((item:newSchedule) => (
+                    
+                    <>
+                        <span key={ item.class_id }className="hoursBlock">
+
+                          {
+                            
+                            item.week_day && (
+                              <Select 
+                              name="week_day"
+                              label="Dia da semana"
+                              options={[
+                                { value: `${ item.week_day }`, label: `${ item.day }` }
+                              ]}
+                      
+                            />
+                            )
+                          
+                          }
+
+                          {
+                            
+                            !item.week_day && (
+                              <Select 
+                              name="week_day"
+                              label="Dia da semana"
+                              options={[
+                                { value: `1`, label: `Domingo` },
+                                { value: `2`, label: `Segunda-feira` },
+                                { value: `3`, label: `Terça-feira` },
+                                { value: `4`, label: `Quarta-feira` },
+                                { value: `5`, label: `Quinta-feira` },
+                                { value: `6`, label: `Sexta-feira` },
+                                { value: `7`, label: `Sábado` }
+                              ]}
+                      
+                            />
+                            )
+                          
+                          }
+
+                        
+                          <Input 
+                            name="from" 
+                            label="Das"
+                            value={ `${ item.from }` }
+                          />
+                          <Input 
+                            name="to" 
+                            label="Até" 
+                            value={ `${ item.to }` }
+                          />
+                        </span>
+                    
+                      <button className="btnExclude" type='button'
+                        onClick={ () => { handleExclude( item.class_id) } }
+                      >Excluir</button>
+                    </>
+
+                  ))
+              
+                /* teste && teste.map((item:Schedule) => (
+                  <>
+                      <span key={ teste.indexOf(item) }className="hoursBlock">
+
+                      {
+                        
+                        item.week_day && (
+                          <Select 
+                          name="week_day"
+                          label="Dia da semana"
+                          options={[
+                            { value: `${ item.week_day }`, label: `${ item.day }` }
+                          ]}
+                  
+                        />
+                        )
+                       
+                      }
+
+                      {
+                        
+                        !item.week_day && (
+                          <Select 
+                          name="week_day"
+                          label="Dia da semana"
+                          options={[
+                            { value: `1`, label: `Domingo` },
+                            { value: `2`, label: `Segunda-feira` },
+                            { value: `3`, label: `Terça-feira` },
+                            { value: `4`, label: `Quarta-feira` },
+                            { value: `5`, label: `Quinta-feira` },
+                            { value: `6`, label: `Sexta-feira` },
+                            { value: `7`, label: `Sábado` }
+                          ]}
+                  
+                        />
+                        )
+                       
+                      }
+
+                     
+                      <Input 
+                        name="from" 
+                        label="Das"
+                        value={ `${ item.from }` }
+                      />
+                      <Input 
+                        name="to" 
+                        label="Até" 
+                        value={ `${ item.to }` }
+                      />
+                    </span>
+                 
+                   <button className="btnExclude" type='button'
+                    onClick={ () => { handleExclude(teste.indexOf(item)) } }
+                   >Excluir</button>
+                  </>
+                ))   */
+              }
+
+             
+
+             {/*  <span className="hoursBlock">
                 <Select 
                   name="week_day"
                   label="Dia da semana"
                   defaultValue="Selecione uma opção"
+                  options={ optionWeekDay }
                   options={[
                     { value: '0', label: 'Domingo' },
                     { value: '1', label: 'Segunda-feira' },
@@ -185,7 +548,7 @@ function Profile (){
                 />
                
               </span>    
-              <p>Excluir horário</p>
+              <p>Excluir horário</p> */}
 
               {/*  <span className="hoursBlock">
                 <Select 

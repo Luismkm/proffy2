@@ -147,17 +147,29 @@
   border: 1px solid;
 }
 
-#page_profile #main_content .hoursLabel p {
+#page_profile #main_content .hoursLabel .btnExclude {
   font: 600 1.4rem Archivo;
   color: var(--color-text-delete);
-  margin-top: -6px;
+  margin-top: -9px;
   background: var(--color-button-text);
-  width: 129px;
+  width: 103px;
+  height: 21px;
   text-align: center;
   margin-left: 267px;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+  padding: 2px;
 }
 
-#page_profile #main_content .hoursLabel p + span {
+#page_profile #main_content .hoursLabel .btnExclude:hover {
+  border: 1px solid var(--color-text-delete);
+  border-radius: 7%;
+
+  
+}
+
+#page_profile #main_content .hoursLabel .btnExclude + span {
   margin-top: 24px;
 }
 
