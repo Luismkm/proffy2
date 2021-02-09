@@ -36,6 +36,7 @@ interface newSchedule{
   from: string,
   to: string,
   class_id: number,
+  id_week: number,
 }
 
 interface Subjects {
@@ -58,9 +59,9 @@ interface OptionWeekDay {
 
 function Profile (){
   //const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
-/*   const[imgFile, setImgFile] = useState('') */
+  const[imgPreview, setImgPreview] = useState('')
   
-  const[userId, setUserId] = useState()
+  const[userId, setUserId] = useState('')
   const[avatar, setAvatar] = useState('')
   const[name, setName] = useState('')
   const[lastname, setLastname] = useState('')
@@ -69,12 +70,12 @@ function Profile (){
 
   const[subjects, setSubjects] = useState<Subjects[]>([])
 
-  const[selectedSubject, setSelectedSubject] = useState<number>()
+  const[selectedSubject, setSelectedSubject] = useState('')
 
   const[option, setOption] = useState<Option[]>([])
 
   const[bio, setBio] = useState('')
-  const[cost, setCost] = useState<number>()
+  const[cost, setCost] = useState('')
 
   const[schedule, setSchedule] = useState<newSchedule[]>([])
 
@@ -95,11 +96,12 @@ function Profile (){
 
 
   useEffect(() =>{
-    api.get(`user/1`).then(response => {
+    api.get(`users/1`).then(response => {
       const user = response.data[0]
       const userData = response.data
-
+     
       setUserId(user.user_id)
+      setImgPreview(`http://localhost:3333/uploads/${ user.avatar }`)
       setAvatar(user.avatar)
       setName(user.name)
       setLastname(user.lastname)
@@ -108,7 +110,7 @@ function Profile (){
 
       const subjects = userData.map((data:any) => {
         const subject = {
-          subject_id: data.id,
+          subject_id: data.class_id,
           subject: data.subject,
           bio: data.bio,
           cost: data.cost,
@@ -119,6 +121,7 @@ function Profile (){
       setSubjects(subjects)
 
       const subjectsOption = subjects.map((subject:any) => {
+        
         const option = {
           value: subject.subject_id,
           label: subject.subject,
@@ -136,19 +139,19 @@ function Profile (){
   useEffect(() => {
 
     if(selectedSubject) {
-      
+    
       subjects.forEach((subject:Subjects) => {
        
-        if(subject.subject_id === selectedSubject ) {
+        if(subject.subject_id === Number(selectedSubject) ) {
           setBio(subject.bio)
-          setCost(subject.cost)
+          setCost(String(subject.cost))
         }
 
       })
 
       api.get(`schedule/${selectedSubject}`).then(response => {
         const schedule = response.data
-        console.log(schedule)
+      //  console.log(schedule)
         setSchedule(schedule)
       })
     }
@@ -163,7 +166,10 @@ function Profile (){
       const file = e.target.files[0]
 
       const avatarPreview = URL.createObjectURL(file)
-      setAvatar(avatarPreview)
+      
+      console.log(avatarPreview)
+      setImgPreview(avatarPreview)
+      setAvatar(file)
     }
    return
   }
@@ -192,7 +198,7 @@ function Profile (){
   function handleSubject( event:ChangeEvent<HTMLSelectElement> ) {
 
     const subjectValue = event.target.value
-    setSelectedSubject(parseInt(subjectValue))
+    setSelectedSubject(subjectValue)
  
    /* const subjectValue = event.target.value
    setInputSubject(subjectValue)
@@ -209,12 +215,16 @@ function Profile (){
   }
 
   function handleExclude(index: number){
-   console.log('exclude')
-    setInputSubject(inputSubjectValue)
+   
 
+   api.get(`exclude/schedule/?id=${ index }`).then(response =>{
+     console.log(response)
+   })
+
+    /* setInputSubject(inputSubjectValue)
     teste.splice(index,1)
     setTeste(teste)
-    handleAtt(teste)
+    handleAtt(teste) */
 
   
    
@@ -222,8 +232,31 @@ function Profile (){
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
-   
+    
     const data = new FormData()
+
+    data.append('user_id', userId)
+    data.append('avatar', avatar)
+    data.append('name', name)
+    data.append('lastname', lastname)
+    data.append('email', email)
+    data.append('whatsapp', whatsapp)
+    data.append('subject_id', selectedSubject)
+    data.append('bio', bio)
+    data.append('cost', cost)
+
+    // testa se o schedule(calendário) foi alterado
+    if(schedule.length !== 0){
+      // pergar schedule
+      
+      data.append('schedule', JSON.stringify(schedule))
+      
+    }
+
+    await api.put('users', data)
+    alert('Cadastro')
+   
+  /*   const data = new FormData()
     data.append('user_id', '1')
     data.append('avatar', avatar)
     data.append('name', name)
@@ -236,23 +269,10 @@ function Profile (){
 
     teste.forEach(item => {
       console.log(item)
-    })
+    }) */
 
-    /* data.append('schedule', teste) */
-
-  /*   const schedule = `${weekday},${from},${to}`
-
-    const data = new FormData()
-    data.append('user_id', '1')
-    data.append('avatar', imgFile)
-    data.append('whatsapp', whatsapp)
-    data.append('bio', bio)
-    data.append('subject', subject)
-    data.append('cost', cost)
-    data.append('schedule', schedule)
-
-    await api.post('classes', data) */
-    alert('Cadastro')
+  
+   
   }
 
   function handleAddNewSchedule(){
@@ -283,7 +303,7 @@ function Profile (){
           <img src={ imgBackground } alt="Textura"/>
           <span className="avatar">
             <div id="avatarArea">
-              <img src={ avatar } alt="Avatar"/>
+              <img src={ imgPreview } alt="Avatar"/>
             </div>
 
             
@@ -319,13 +339,13 @@ function Profile (){
                   name="name" 
                   label="Nome"
                   value={ name }
-                  /* onChange={ event => setName( event.target.value ) }  */
+                  onChange={ event => setName( event.target.value ) } 
                 />
                 <Input 
                   name="lastname" 
                   label="Sobrenome"
                   value={ lastname }
-                 /*  onChange={ event => setLastname( event.target.value ) } */
+                  onChange={ event => setLastname( event.target.value ) }
                 />
               </span>
               <span>  
@@ -334,13 +354,13 @@ function Profile (){
                   name="email" 
                   label="E-mail"
                   value={ email }
-                  /* onChange={ event => setEmail( event.target.value ) }  */
+                  onChange={ event => setEmail( event.target.value ) } 
                 />
                 <Input 
                   name="whatsapp" 
                   label="Whatsapp"
                   value={ whatsapp }
-                  /* onChange={ event => setWhatsapp( event.target.value ) }  */
+                  onChange={ event => setWhatsapp( event.target.value ) } 
                 />
               </span>
               <TextArea 
@@ -386,7 +406,7 @@ function Profile (){
                   name="cost" 
                   label="Custo hora por aula"
                   value={ cost } 
-                /*   onChange={ event => setCost(event.target.value) } */
+                  onChange={ event => setCost(event.target.value) }
                 />
                 </span>   
             </fieldset>
@@ -446,13 +466,18 @@ function Profile (){
                           <Input 
                             name="to" 
                             label="Até" 
-                            value={ `${ item.to }` }
+                            value={ `${ item.to}` }
                           />
                         </span>
                     
-                      <button className="btnExclude" type='button'
-                        onClick={ () => { handleExclude( item.class_id) } }
-                      >Excluir</button>
+                      <button 
+                        className="btnExclude" 
+                        type='button'
+                        onClick={ () => { handleExclude( item.id ) } }>
+
+                         Excluir
+                      
+                      </button>
                     </>
 
                   ))
@@ -579,7 +604,7 @@ function Profile (){
             <p>Importante! <span>Preencha todos os dados corretamente.</span> </p>          
           </div>
          
-          <button type="submit">Salvar Cadastro</button>
+          <button type="submit" >Salvar Cadastro</button>
         </div>
         </form>    
         </div>
