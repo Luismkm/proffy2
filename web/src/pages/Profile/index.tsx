@@ -12,31 +12,14 @@ import api from '../../services/api'
 
 /* const session = JSON.parse(localStorage.getItem('@PFAuth:user') || '') */
 
-interface User {
-   id: number
-   avatar: string
-   name: string
-   lastname: string
-   email: string
-   whatsapp: string
-   subjects: Subjects
-}
-
-interface Schedule{ 
-  week_day: string,
-  day: string,
-  from: string,
-  to: string, 
-}
 
 interface newSchedule{ 
-  id: number
-  week_day: string,
+  id: number, // id schedule
+  week_day: number,
   day: string,
   from: string,
   to: string,
-  class_id: number,
-  id_week: number,
+  class_id: number, //id subject
 }
 
 interface Subjects {
@@ -50,12 +33,6 @@ interface Option {
   value: string
   label: string
 }
-
-interface OptionWeekDay {
-  value: string
-  label: string
-}
-
 
 function Profile (){
   //const[avatar, setAvatar] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ7f1Es84yxr11Bfj_10hV2_srMeJ-Ry71Yiw&usqp=CAU')
@@ -79,20 +56,9 @@ function Profile (){
 
   const[schedule, setSchedule] = useState<newSchedule[]>([])
 
+  const[newDataSchedule, setNewDataSchedule] = useState<newSchedule[]>([])
 
-
-
-
-  const[optionWeekDay, setOptionWeekday] = useState<OptionWeekDay[]>([])
-  /* const[user, setUser] = useState<User>({} as User) */
-  const[teste,setTeste] = useState<Schedule[]>([{ week_day:'', from:'', to:'', day:'' }])
-
-  const[inputSubject, setInputSubject] = useState('')
-  const[inputSubjectValue, setInputSubjectValue] = useState('')
-
-  const[inputSchedule, setInputSchedule] = useState()
-
-  const[newSchedule, setNewSchedule] = useState('')
+  const[dayValue, setDayValue] = useState<string>('0')
 
 
   useEffect(() =>{
@@ -151,7 +117,7 @@ function Profile (){
 
       api.get(`schedule/${selectedSubject}`).then(response => {
         const schedule = response.data
-      //  console.log(schedule)
+        console.log(schedule)
         setSchedule(schedule)
       })
     }
@@ -174,43 +140,10 @@ function Profile (){
    return
   }
 
-  function handleAtt(subj: any){
-    console.log('handleAtt')
-    if(inputSubject === ''){
-      setInputSubject(inputSubjectValue)
-    }else{
-      setInputSubject('')
-    }
-    
-   /*  setInputSubject(inp) */
-   /*  setTeste([])
-    setTeste(subj.schedule) */
-    /* const subjectData = subjects.filter(function(sub) {
-      return sub.subject === subj
-     }) */
-    
-     
-    
-  }
-
-
-
   function handleSubject( event:ChangeEvent<HTMLSelectElement> ) {
 
     const subjectValue = event.target.value
     setSelectedSubject(subjectValue)
- 
-   /* const subjectValue = event.target.value
-   setInputSubject(subjectValue)
-   setInputSubjectValue(subjectValue)
-   const subjectData = subjects.filter(function(sub) {
-    return sub.subject === subjectValue
-   })
-
-  
-   setInputCost(String(subjectData[0].cost))
-   setInputBio(subjectData[0].bio) */
-   
 
   }
 
@@ -256,40 +189,15 @@ function Profile (){
     await api.put('users', data)
     alert('Cadastro')
    
-  /*   const data = new FormData()
-    data.append('user_id', '1')
-    data.append('avatar', avatar)
-    data.append('name', name)
-    data.append('lastname', lastname)
-    data.append('email', email)
-    data.append('whatsapp', whatsapp)
-
-    data.append('bio', bio)
-    data.append('cost', String(cost))
-
-    teste.forEach(item => {
-      console.log(item)
-    }) */
-
-  
-   
   }
+
+
 
   function handleAddNewSchedule(){
-    setSubjects( [  ] )
-    console.log(teste)
-    if(!inputSubject){
-      alert('Selecione a matéria')
-    }
- /*    console.log(subjects) */
-    
-    
 
-  setTeste( [...teste, { week_day:'', from:'', to:'', day:'' }] )
-  
+    setNewDataSchedule( [...newDataSchedule, { id: 0, week_day:0, day:'', from:'', to:'', class_id:0 }] )
     
   }
- 
   
   /* if (name === ''){
     return <p>Carregando...</p>
@@ -419,55 +327,97 @@ function Profile (){
                   schedule && schedule.map((item:newSchedule) => (
                     
                     <>
+                     
                         <span key={ item.class_id }className="hoursBlock">
 
                           {
                             
-                            item.week_day && (
-                              <Select 
-                              name="week_day"
-                              label="Dia da semana"
-                              options={[
-                                { value: `${ item.week_day }`, label: `${ item.day }` }
-                              ]}
-                      
-                            />
+                            item.from&& (
+                              <>
+                                <Select 
+                                  name="week_day"
+                                  label="Dia da semana"
+                                  options={[
+                                    { value: `${ item.week_day }`, label: `${ item.day }` }
+                                  ]}
+                                />
+                                <Input 
+                                  name="from" 
+                                  label="Das"
+                                  value={ `${ item.from }` }
+                                />
+                                <Input 
+                                  name="to" 
+                                  label="Até" 
+                                  value={ `${ item.to}` }
+                                />
+                        
+                              </>
                             )
-                          
                           }
+                        </span>
+                    
+                      <button 
+                        className="btnExclude" 
+                        type='button'
+                        onClick={ () => { handleExclude( item.id ) } }
+                      >
+
+                        Excluir
+                      
+                      </button>
+                    </>
+
+                  ))
+              }
+
+              {
+                  newDataSchedule && newDataSchedule.map((item:newSchedule) => (
+                    
+                    <>
+                       <span key={ item.class_id }className="hoursBlock">
 
                           {
                             
-                            !item.week_day && (
-                              <Select 
-                              name="week_day"
-                              label="Dia da semana"
-                              options={[
-                                { value: `1`, label: `Domingo` },
-                                { value: `2`, label: `Segunda-feira` },
-                                { value: `3`, label: `Terça-feira` },
-                                { value: `4`, label: `Quarta-feira` },
-                                { value: `5`, label: `Quinta-feira` },
-                                { value: `6`, label: `Sexta-feira` },
-                                { value: `7`, label: `Sábado` }
-                              ]}
-                      
-                            />
+                            !item.from&& (
+                              <>
+                                <Select 
+                                name="week_day"
+                                label="Dia da semana"
+                                value={ dayValue }
+                                onChange={ event => setDayValue( event.target.value )}
+                                
+                                options={[
+                                  { value: `1`, label: `Domingo` },
+                                  { value: `2`, label: `Segunda-feira` },
+                                  { value: `3`, label: `Terça-feira` },
+                                  { value: `4`, label: `Quarta-feira` },
+                                  { value: `5`, label: `Quinta-feira` },
+                                  { value: `6`, label: `Sexta-feira` },
+                                  { value: `7`, label: `Sábado` }
+                                 ]}
+                                />
+                                 <Input 
+                                  name="from" 
+                                  label="Das"
+                                  //value={ from }
+                                  //onChange={ event => handleAlterFrom( event.target.value, newDataSchedule.indexOf(item) ) }
+                                  //onFocus={ event => setFrom(event.target.value) }
+
+                                 />
+                                 <Input 
+                                  name="to" 
+                                  label="Até" 
+                                 // value={ to }
+                                 // onChange={ event => handleAlterTo( event.target.value, schedule.indexOf(item) ) }
+                                  
+                                />
+                              </>
+                            
                             )
                           
                           }
-
                         
-                          <Input 
-                            name="from" 
-                            label="Das"
-                            value={ `${ item.from }` }
-                          />
-                          <Input 
-                            name="to" 
-                            label="Até" 
-                            value={ `${ item.to}` }
-                          />
                         </span>
                     
                       <button 
@@ -481,120 +431,12 @@ function Profile (){
                     </>
 
                   ))
-              
-                /* teste && teste.map((item:Schedule) => (
-                  <>
-                      <span key={ teste.indexOf(item) }className="hoursBlock">
-
-                      {
-                        
-                        item.week_day && (
-                          <Select 
-                          name="week_day"
-                          label="Dia da semana"
-                          options={[
-                            { value: `${ item.week_day }`, label: `${ item.day }` }
-                          ]}
-                  
-                        />
-                        )
-                       
-                      }
-
-                      {
-                        
-                        !item.week_day && (
-                          <Select 
-                          name="week_day"
-                          label="Dia da semana"
-                          options={[
-                            { value: `1`, label: `Domingo` },
-                            { value: `2`, label: `Segunda-feira` },
-                            { value: `3`, label: `Terça-feira` },
-                            { value: `4`, label: `Quarta-feira` },
-                            { value: `5`, label: `Quinta-feira` },
-                            { value: `6`, label: `Sexta-feira` },
-                            { value: `7`, label: `Sábado` }
-                          ]}
-                  
-                        />
-                        )
-                       
-                      }
-
-                     
-                      <Input 
-                        name="from" 
-                        label="Das"
-                        value={ `${ item.from }` }
-                      />
-                      <Input 
-                        name="to" 
-                        label="Até" 
-                        value={ `${ item.to }` }
-                      />
-                    </span>
-                 
-                   <button className="btnExclude" type='button'
-                    onClick={ () => { handleExclude(teste.indexOf(item)) } }
-                   >Excluir</button>
-                  </>
-                ))   */
               }
+
 
              
 
-             {/*  <span className="hoursBlock">
-                <Select 
-                  name="week_day"
-                  label="Dia da semana"
-                  defaultValue="Selecione uma opção"
-                  options={ optionWeekDay }
-                  options={[
-                    { value: '0', label: 'Domingo' },
-                    { value: '1', label: 'Segunda-feira' },
-                    { value: '2', label: 'Terça-feira' },
-                    { value: '3', label: 'Quarta-feira' },
-                    { value: '4', label: 'Quinta-feira' },
-                    { value: '5', label: 'Sexta-feira' },
-                    { value: '6', label: 'Sábado' },   
-                  ]}
-                  onChange={ event => setWeekday(event.target.value) }  
-                />
-                <Input 
-                  name="from" 
-                  label="Das"
-                  onChange={ event => setFrom(event.target.value) }
-                />
-                <Input 
-                  name="to" 
-                  label="Até" 
-                  onChange={ event => setTo(event.target.value) }
-                />
-               
-              </span>    
-              <p>Excluir horário</p> */}
-
-              {/*  <span className="hoursBlock">
-                <Select 
-                  name="week_day"
-                  label="Dia da semana"
-                  options={[
-                    { value: '0', label: 'Domingo' },
-                    { value: '1', label: 'Segunda-feira' },
-                    { value: '2', label: 'Terça-feira' },
-                    { value: '3', label: 'Quarta-feira' },
-                    { value: '4', label: 'Quinta-feira' },
-                    { value: '5', label: 'Sexta-feira' },
-                    { value: '6', label: 'Sábado' },   
-                  ]}  
-                />
-                <Input name="from" label="Das" />
-                <Input name="to" label="Até" />
-               
-              </span>    
-              <p>Excluir horário</p> */}
-
+          
             </fieldset>
         </main>
         <div id="footer">
