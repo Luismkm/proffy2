@@ -146,6 +146,32 @@
   border-bottom: 1px solid var(--color-line-in-white);
 }
 
+#page_giveClasses  #main_content .hoursLabel .btnExclude {
+  font: 600 1.4rem Archivo;
+  color: var(--color-text-delete);
+  margin-top: -9px;
+  background: var(--color-button-text);
+  width: 103px;
+  height: 21px;
+  text-align: center;
+  margin-left: 267px;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+  padding: 2px;
+}
+
+#page_giveClasses  #main_content .hoursLabel .btnExclude:hover {
+  border: 1px solid var(--color-text-delete);
+  border-radius: 7%;
+
+  
+}
+
+#page_giveClasses  #main_content .hoursLabel .btnExclude + span {
+  margin-top: 24px;
+}
+
 #page_giveClasses #main_content .inputEmail {
   width: 384px;
 }
