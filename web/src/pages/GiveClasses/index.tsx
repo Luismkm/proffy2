@@ -12,16 +12,15 @@ import attenctionIcon from '../../assets/images/icons/warning.svg'
 import api from '../../services/api'
 
 type newSchedule = { 
-  id: number, // id schedule
-  week_day: number,
-  day: string,
-  from: string,
-  to: string,
-  class_id: number, //id subject
+  id: number // id schedule
+  week_day: number
+  from: string
+  to: string
+  //day: string
 }
 
 type Subjects = {
-  subject_id: number,
+  subject_id: number
   subject: string
   bio: string
   cost: number
@@ -50,14 +49,14 @@ function GiveClasses() {
   // apenas para visualização dos dados
   const[imgPreview, setImgPreview] = useState('')
   const[whatsapp, setWhatsapp] = useState('')
-  const[from, setFrom] = useState('')
-  const[to, setTo] = useState('')
   //
 
   const[userId, setUserId] = useState('1')
   const[bio, setBio] = useState('')
   const[cost, setCost] = useState('')
   const[subject, setSubject] = useState('')
+  const[from, setFrom] = useState('')
+  const[to, setTo] = useState('')
   const[newDataSchedule, setNewDataSchedule] = useState<newSchedule[]>([])
   const[currentSchedule, setCurrentSchedule] = useState<newSchedule[]>([])
   const[dayValue, setDayValue] = useState('0')
@@ -81,8 +80,6 @@ function GiveClasses() {
         }
         return subject
       })
-      
-      //setSubjects(subjects)
 
       let newOptions:any = []
 
@@ -98,33 +95,25 @@ function GiveClasses() {
 
       })
 
-      setOption(newOptions)
+     setOption(newOptions)
       
     })
 
   },[])
 
- 
-
   function handleAddNewSchedule(){
-    console.log(setCurrentSchedule.length )
-
-    if((setCurrentSchedule.length > 1)&&(from === '' || to === '')){
-      alert('Preencha todos os dados')
-      return
-    } 
 
     if(from || to){
 
-      setNewDataSchedule([...newDataSchedule, { id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }])
+      setNewDataSchedule([...newDataSchedule, { id: 1, week_day:+dayValue, from:from, to:to }])
       setFrom('')
       setTo('')
       setDayValue('0')
-      setCurrentSchedule( [{ id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }] )
+      setCurrentSchedule( [{ id: 1, week_day:+dayValue, from:from, to:to }] )
       return
     }
 
-    setCurrentSchedule( [{ id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }] )
+    setCurrentSchedule( [{ id: 1, week_day:+dayValue, from:from, to:to  }] )
 
     
   }
@@ -136,33 +125,71 @@ function GiveClasses() {
   }
 
   function handleExcludeCurrentSchedule(index: number){
-   
-    currentSchedule.splice(index,1)
     setCurrentSchedule([])
-   }
+  }
+
+  function setFromInCurrentSchedule(value: string){
+    currentSchedule[0].from = value
+    setCurrentSchedule(currentSchedule)
+   
+  }
+
+  function setToInCurrentSchedule(value: string){
+    currentSchedule[0].to = value
+    setCurrentSchedule(currentSchedule)
+    
+  }
+
+  // atualiza para subjects restantes
+  function updateSubjectsOption(subject: string){
+    let newOptions:any = []
+
+      option.map((item: Option) => {
+          
+          if(item.value !== subject){
+            newOptions = [...newOptions, item]
+          }
+      })
+
+      setOption(newOptions)
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault()
-    
-    const data = {
-      'user_id': userId,
-      bio,
-      cost,
-      'day_id': dayValue,
+
+
+    if((!from || !to)&&(currentSchedule.length != 0)){
+      alert('Preencha todos os dados.')
+      return
+    }else{
+
+      const schedule = newDataSchedule.concat(currentSchedule)
+
+      const data = {
+        'user_id': userId,
+        bio,
+        cost,
+        subject,
+        'day_id': dayValue,
+        'schedule': JSON.stringify(schedule)
+      }
+
+      await api.post('classes', data)
+      alert('Classe criada com sucesso.')
+
+      setBio('')
+      setCost('')
+      setFrom('')
+      setTo('')
+      setDayValue('')
+      setNewDataSchedule([])
+      setCurrentSchedule([])
+      updateSubjectsOption(subject)
+
+
     }
-
-    await api.post('classes', data)
-    alert('Classe criada com sucesso.')
-   
   }
 
-  function handleSetFrom(value:string){
-    setFrom(value)
-  }
-
-  function handleSetTo(value:string){
-    setTo(value)
-  }
 
 
   return(
@@ -227,6 +254,7 @@ function GiveClasses() {
                     <Input 
                       name="cost" 
                       label="Custo hora por aula" 
+                      value={ cost }
                       onChange={ event => setCost(event.target.value) }
                     />
                   </span>   
@@ -240,7 +268,7 @@ function GiveClasses() {
                     currentSchedule && currentSchedule.map((item:newSchedule) => (
                     
                     <>
-                       <span key={ item.class_id }className="hoursBlock">
+                       <span key={ currentSchedule.indexOf(item) }className="hoursBlock">
 
                           {
                               <>
@@ -265,21 +293,19 @@ function GiveClasses() {
                                   name="from" 
                                   label="Das"
                                   value={ from }
-                                  onChange={ event => handleSetFrom( event.target.value )}
-                                  //onFocus={ event => setFrom(event.target.value) }
+                                  onChange={ event => setFrom( event.target.value )}
+                                  onBlur={ event => setFromInCurrentSchedule(event.target.value)}
 
                                  />
                                  <Input 
                                   name="to" 
                                   label="Até" 
                                   value={ to }
-                                  onChange={ event => handleSetTo( event.target.value )}
+                                  onChange={ event => setTo( event.target.value )}
+                                  onBlur={ event => setToInCurrentSchedule(event.target.value)}
                                   
                                 />
                               </>
-                            
-                            
-                          
                           }
 
                         </span>
@@ -300,14 +326,14 @@ function GiveClasses() {
 {
                     newDataSchedule && newDataSchedule.slice(0).reverse().map((item:newSchedule) => (
                       <>
-                           <span key={ item.class_id }className="hoursBlock">
+                           <span key={ newDataSchedule.indexOf(item) }className="hoursBlock">
 
                           {
                               <>
                                 <Select 
                                 name="week_day"
                                 label="Dia da semana"
-                                value={ item.day }
+                                value={ item.week_day }
                                 onChange={ event => setDayValue( event.target.value )}
                                
                                 
@@ -325,20 +351,14 @@ function GiveClasses() {
                                   name="from" 
                                   label="Das"
                                   value={ item.from }
-                                  //onChange={ event => setFrom( event.target.value )}
-                                  //onFocus={ event => setFrom(event.target.value) }
-
                                  />
                                  <Input 
                                   name="to" 
                                   label="Até" 
                                   value={ item.to }
-                                 // onChange={ event => setTo( event.target.value )}
-                                  
                                 />
                                 
                               </>
-                          
                           }
 
                         </span> 
@@ -351,9 +371,7 @@ function GiveClasses() {
                       
                          </button>  
                       </>
-                    ))
-
-                   
+                    ))                 
                   }
 
                 </fieldset>
