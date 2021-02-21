@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 
 import './styles.css'
 import Header from '../../assets/components/Header'
@@ -10,7 +10,6 @@ import rocket from '../../assets/images/icons/rocket.svg'
 import attenctionIcon from '../../assets/images/icons/warning.svg'
 
 import api from '../../services/api'
-
 
 type newSchedule = { 
   id: number, // id schedule
@@ -46,20 +45,22 @@ function GiveClasses() {
     { value: 'Matemática', label: 'Matemática' },
     { value: 'Português', label: 'Português' },
     { value: 'Química', label: 'Química' },
-])
+  ])
 
-  const[userId, setUserId] = useState('')
+  // apenas para visualização dos dados
   const[imgPreview, setImgPreview] = useState('')
   const[whatsapp, setWhatsapp] = useState('')
+  const[from, setFrom] = useState('')
+  const[to, setTo] = useState('')
+  //
+
+  const[userId, setUserId] = useState('1')
   const[bio, setBio] = useState('')
-  const[subject, setSubject] = useState('')
   const[cost, setCost] = useState('')
-
+  const[subject, setSubject] = useState('')
   const[newDataSchedule, setNewDataSchedule] = useState<newSchedule[]>([])
-  const[dayValue, setDayValue] = useState<string>('0')
-
-
-
+  const[currentSchedule, setCurrentSchedule] = useState<newSchedule[]>([])
+  const[dayValue, setDayValue] = useState('0')
 
 
   useEffect(() =>{
@@ -106,16 +107,63 @@ function GiveClasses() {
  
 
   function handleAddNewSchedule(){
+    console.log(setCurrentSchedule.length )
 
-    setNewDataSchedule( [...newDataSchedule, { id: 0, week_day:0, day:'', from:'', to:'', class_id:0 }] )
+    if((setCurrentSchedule.length > 1)&&(from === '' || to === '')){
+      alert('Preencha todos os dados')
+      return
+    } 
+
+    if(from || to){
+
+      setNewDataSchedule([...newDataSchedule, { id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }])
+      setFrom('')
+      setTo('')
+      setDayValue('0')
+      setCurrentSchedule( [{ id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }] )
+      return
+    }
+
+    setCurrentSchedule( [{ id: 1, week_day:+dayValue, day:dayValue, from:from, to:to, class_id:0 }] )
+
     
   }
 
   function handleExclude(index: number){
    
-    newDataSchedule.splice(index,1)
-    setNewDataSchedule([... newDataSchedule])
+   newDataSchedule.splice(index,1)
+   setNewDataSchedule([... newDataSchedule])
   }
+
+  function handleExcludeCurrentSchedule(index: number){
+   
+    currentSchedule.splice(index,1)
+    setCurrentSchedule([])
+   }
+
+  async function handleSubmit(event: FormEvent) {
+    event.preventDefault()
+    
+    const data = {
+      'user_id': userId,
+      bio,
+      cost,
+      'day_id': dayValue,
+    }
+
+    await api.post('classes', data)
+    alert('Classe criada com sucesso.')
+   
+  }
+
+  function handleSetFrom(value:string){
+    setFrom(value)
+  }
+
+  function handleSetTo(value:string){
+    setTo(value)
+  }
+
 
   return(
     <>
@@ -138,7 +186,7 @@ function GiveClasses() {
 
         <div id="main_content">
 
-          <form onSubmit={() => {}}>
+          <form onSubmit={handleSubmit}>
             <main>
               <fieldset>
                 <legend>Seus dados</legend>
@@ -187,21 +235,21 @@ function GiveClasses() {
               <fieldset className="hoursLabel">
               <legend>Horários disponíveis <span onClick={ () =>{ handleAddNewSchedule() } }>+ Novo horário</span> </legend>
 
-                  {
-                    newDataSchedule && newDataSchedule.map((item:newSchedule) => (
+                  {  
+
+                    currentSchedule && currentSchedule.map((item:newSchedule) => (
                     
                     <>
                        <span key={ item.class_id }className="hoursBlock">
 
                           {
-                            
-                            !item.from&& (
                               <>
                                 <Select 
                                 name="week_day"
                                 label="Dia da semana"
                                 value={ dayValue }
                                 onChange={ event => setDayValue( event.target.value )}
+                               
                                 
                                 options={[
                                   { value: `1`, label: `Domingo` },
@@ -216,30 +264,30 @@ function GiveClasses() {
                                  <Input 
                                   name="from" 
                                   label="Das"
-                                  value={ newDataSchedule.indexOf(item) }
-                                  //onChange={ event => handleAlterFrom( event.target.value, newDataSchedule.indexOf(item) ) }
+                                  value={ from }
+                                  onChange={ event => handleSetFrom( event.target.value )}
                                   //onFocus={ event => setFrom(event.target.value) }
 
                                  />
                                  <Input 
                                   name="to" 
                                   label="Até" 
-                                 // value={ to }
-                                 // onChange={ event => handleAlterTo( event.target.value, schedule.indexOf(item) ) }
+                                  value={ to }
+                                  onChange={ event => handleSetTo( event.target.value )}
                                   
                                 />
                               </>
                             
-                            )
+                            
                           
                           }
-                        
+
                         </span>
                     
                       <button 
                         className="btnExclude" 
                         type='button'
-                        onClick={ () => { handleExclude( newDataSchedule.indexOf(item) ) } }>
+                        onClick={ () => { handleExcludeCurrentSchedule( currentSchedule.indexOf(item) ) } }>
 
                          Excluir
                       
@@ -248,6 +296,65 @@ function GiveClasses() {
 
                   ))
               }
+
+{
+                    newDataSchedule && newDataSchedule.slice(0).reverse().map((item:newSchedule) => (
+                      <>
+                           <span key={ item.class_id }className="hoursBlock">
+
+                          {
+                              <>
+                                <Select 
+                                name="week_day"
+                                label="Dia da semana"
+                                value={ item.day }
+                                onChange={ event => setDayValue( event.target.value )}
+                               
+                                
+                                options={[
+                                  { value: `1`, label: `Domingo` },
+                                  { value: `2`, label: `Segunda-feira` },
+                                  { value: `3`, label: `Terça-feira` },
+                                  { value: `4`, label: `Quarta-feira` },
+                                  { value: `5`, label: `Quinta-feira` },
+                                  { value: `6`, label: `Sexta-feira` },
+                                  { value: `7`, label: `Sábado` }
+                                 ]}
+                                />
+                                 <Input 
+                                  name="from" 
+                                  label="Das"
+                                  value={ item.from }
+                                  //onChange={ event => setFrom( event.target.value )}
+                                  //onFocus={ event => setFrom(event.target.value) }
+
+                                 />
+                                 <Input 
+                                  name="to" 
+                                  label="Até" 
+                                  value={ item.to }
+                                 // onChange={ event => setTo( event.target.value )}
+                                  
+                                />
+                                
+                              </>
+                          
+                          }
+
+                        </span> 
+                        <button 
+                          className="btnExclude" 
+                          type='button'
+                          onClick={ () => { handleExclude( newDataSchedule.indexOf(item) ) } }>
+
+                          Excluir
+                      
+                         </button>  
+                      </>
+                    ))
+
+                   
+                  }
 
                 </fieldset>
             </main>
